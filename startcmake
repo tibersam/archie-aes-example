@@ -1,1 +1,1 @@
-cmake -H. -Bbuild
+cmake -S. -Bbuild
