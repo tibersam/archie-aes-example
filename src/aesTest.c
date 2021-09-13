@@ -2,11 +2,13 @@
 #include <stdint.h>
 #include <aes.h>
 
+#include "aesTest.h"
+
 //Test if aes implementation behaves as expected (aka no corruption in code)
 //Test vectors are from NIST SP 800-38A
 int aesTest(void)
 {
-	struct AES_ctx ctx = {{0}};
+	struct AES_ctx ctx = {{0},{0}};
         uint8_t aestestKey[16] = {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
 	
 	uint8_t aestestinputvector[][16] = 	{	{0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96, 0xe9, 0x3d, 0x7e, 0x11, 0x73, 0x93, 0x17, 0x2a},
@@ -20,9 +22,9 @@ int aesTest(void)
                                         		{0x7b, 0x0c, 0x78, 0x5e, 0x27, 0xe8, 0xad, 0x3f, 0x82, 0x23, 0x20, 0x71, 0x04, 0x72, 0x5d, 0xd4}
                                    		};
 
-	for( int i = 0; i < sizeof(aestestinputvector)/sizeof(aestestinputvector[0]; i++)
+	for( unsigned int i = 0; i < sizeof(aestestinputvector)/sizeof(aestestinputvector[0]); i++)
 	{
-		AES_init_ctx(&ctx, aestestkey);
+		AES_init_ctx(&ctx, aestestKey);
 		AES_ECB_encrypt(&ctx, aestestinputvector[i]);
 		uint32_t failed = 0;
 		for(uint8_t j = 0; j < 16; j++)
