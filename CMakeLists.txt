@@ -41,13 +41,17 @@ set(LIBOPENCM3_LIB opencm3_stm32f0)
 
 
 set(STM32F0_FLAGS "-mfloat-abi=soft -mthumb -mcpu=cortex-m0 -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -fno-common")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall ${STM32F0_FLAGS} -std=c11 -g -O0")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall ${STM32F0_FLAGS} -std=c11 -g -O2")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall --std=c++14 ${STM32F0_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${PROJECT_SOURCE_DIR}/linker/libopencm3_stm32f0.ld -nostartfiles --specs=rdimon.specs -g")
 
 function(add_bin_from_elf bin elf)
 	add_custom_target(${bin} ALL ${CMAKE_OBJCOPY} -Obinary ${elf} ${bin} DEPENDS ${elf})
 endfunction(add_bin_from_elf)
+
+function(add_lst_from_elf lst elf)
+	add_custom_target(${lst} ALL ${CMAKE_OBJDUMP} -S ${elf} > ${lst} DEPENDS ${elf})
+endfunction(add_lst_from_elf)
 
 #file(GLOB Source RELATIVE "src" "*.c")
 
@@ -58,10 +62,15 @@ add_executable(${TARGET}.elf "")
 target_sources(${TARGET}.elf
   PUBLIC
   "src/main.c"
+  "src/aesTest.c"
+  "src/aesTest.h"
+  "src/usart1.c"
+  "src/usart1.h"
 )
 
 target_link_libraries(${TARGET}.elf ${LIBOPENCM3_LIB} tiny-aes c m nosys)
 add_bin_from_elf(${TARGET}.bin ${TARGET}.elf)
+add_lst_from_elf(${TARGET}.lst ${TARGET}.elf)
 
 set(BINARY ${TARGET}.bin)
 
