@@ -40,10 +40,10 @@ add_definitions(-DSTM32F0)
 set(LIBOPENCM3_LIB opencm3_stm32f0)
 
 
-set(STM32F0_FLAGS "-mfloat-abi=soft -mthumb -mcpu=cortex-m0 -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -fno-common")
+set(STM32F0_FLAGS "-mfloat-abi=soft -mthumb -mcpu=cortex-m0 -Wextra -Wimplicit-function-declaration -Wredundant-decls -Wmissing-prototypes -Wstrict-prototypes -Wundef -Wshadow -fno-common -Wdouble-promotion -Wformat=2 -Wformat-overflow -Wformat-truncation -Wconversion -ffunction-sections")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall ${STM32F0_FLAGS} -std=c11 -g -O2")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall --std=c++14 ${STM32F0_FLAGS}")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -T ${PROJECT_SOURCE_DIR}/linker/libopencm3_stm32f0.ld -nostartfiles --specs=rdimon.specs -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --gc-sections -Wall --std=c++14 ${STM32F0_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}  -T ${PROJECT_SOURCE_DIR}/linker/libopencm3_stm32f0.ld -nostartfiles --specs=rdimon.specs -g")
 
 function(add_bin_from_elf bin elf)
 	add_custom_target(${bin} ALL ${CMAKE_OBJCOPY} -Obinary ${elf} ${bin} DEPENDS ${elf})
