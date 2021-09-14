@@ -28,6 +28,7 @@ void aesexperiment(void)
 	gpio_set(GPIOC, GPIO9);
 	AES_ECB_encrypt(&ctx, aesData);
 	gpio_clear(GPIOC, GPIO9);
+	send_aes_data();
 }
 
 int main(void)
