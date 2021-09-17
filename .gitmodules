@@ -4,3 +4,6 @@
 [submodule "src/tiny-AES-c"]
 	path = src/tiny-AES-c
 	url = https://github.com/kokke/tiny-AES-c.git
+[submodule "archie"]
+	path = archie
+	url = https://github.com/Fraunhofer-AISEC/archie.git
