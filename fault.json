@@ -1,0 +1,77 @@
+{
+	"comment" : "Everything in the comment entries is not necessarry and only added to help understand the fault configuration file",
+	"max_instruction_count": 100 ,
+	"start" : {
+		"comment" : "0x8000104 start instruction address", 
+		"address" : 134217988,
+		"counter" : 0
+	},
+	"end" : {
+		"comment" : "0x8000122 end instruction address", 
+		"address" : 134218018,
+		"counter" : 0
+	},
+	"faults" :[	
+			[
+				{	
+					"comment1" : "Sbox data fault in register r1", 
+					"fault_address"		: [1],
+					"fault_type"		: "register",
+					"fault_model"		: "set1",
+					"fault_livespan"	: [0],
+					"fault_mask"		: [1, 256, 1],
+					"comment2" : "Fault injected after values loaded from sbox 0x8001024, rounds 8 - 10",
+					"trigger_address"	: [134218018],
+					"trigger_counter"	: [128, 160, 1]
+				}
+			],
+			[
+				{
+					"comment1" : "Fault instructions of sbox access. 0x800101a - 0x8001032",
+					"fault_address"		: [134221850, 134221874, 1],
+					"fault_type"		: "instruction",
+					"fault_model"		: "set1",
+					"fault_livespan"	: [2],
+					"fault_mask"		: [4],
+					"trigger_address"	: [-1],
+					"trigger_counter"	: [141]
+				}
+			],
+			[
+				{
+					"comment1": "Fault last round check: 0x8001066 - 0x800106c",
+					"fault_address"		: [134221926, 134221932, 1],
+					"fault_type"		: "instruction",
+					"fault_model"		: "set1",
+					"fault_livespan"	: [2],
+					"fault_mask"		: { "type" : "shift" , "range" : [3, 7, 10]},
+					"trigger_address"	: [-1],
+					"trigger_counter"	: [8, 10, 1]
+				}
+			],
+			[
+				{
+					"comment1": "Fault last round check: 0x8001066 - 0x800106c",
+					"fault_address"		: [134221926, 134221932, 1],
+					"fault_type"		: "instruction",
+					"fault_model"		: "set1",
+					"fault_livespan"	: [2],
+					"fault_mask"		: [1, 256, 1],
+					"trigger_address"	: [-1],
+					"trigger_counter"	: [8, 10, 1]
+				}
+			]
+		],
+	"memorydump": [
+			{
+				"comment" : "sbox data",
+				"address" : 134224580 , 
+				"length" : 256 
+			},
+			{
+				"comment": "aes data",
+				"address" : 536870912 ,
+				"length" : 16
+			}
+		]
+}

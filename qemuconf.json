@@ -1,0 +1,6 @@
+{
+	"qemu" : "archie/qemu/build/debug/arm-softmmu/qemu-system-arm",
+	"kernel" : "binary/example-aes.bin",
+	"plugin" : "archie/faultplugin/libfaultplugin.so",
+	"machine" : "stm32f0discovery"
+}
