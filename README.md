@@ -18,13 +18,14 @@ Furthermore some parts could be assembled differently compared to this binary, t
 ## ARCHIE
 
 Archie can be found under https://github.com/Fraunhofer-AISEC/archie .
-The fault configuration can be found under XXX
-The QEMU configuration used can be found here XXX.
+The fault configuration can be found in [fault.json](fault.json)
+The QEMU configuration used can be found in [qemuconf.json](qemuconf.json).
 If you have archie in another folder, please change the paths inside the qemu configuration or move the fault configuration and the binary to archie.
 
 ### Run Experiment
 
 To run the archie simulation, you can use 
-'''
-python3 controller.py --fault XXX --qemu XXX -w {WORKERNUMBER} aes-experiment.hdf5
-'''
+```
+python3 archie/controller.py --fault fault.json --qemu qemuconf.json -w ${nproc --all} aes-experiment.hdf5
+```
+
